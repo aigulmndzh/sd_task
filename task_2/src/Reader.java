@@ -4,8 +4,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-public class Reader {
+/**
+ * Нахождение всех текстовых файлов
+ */
+public final class Reader {
     private final Scanner in = new Scanner(System.in);
+
+    /**
+     * путь корневой папки
+     */
     public Path root;
     public final List<Path> txtFiles = new ArrayList<>();
     private final Queue<Path> directories = new LinkedList<>();
@@ -14,10 +21,19 @@ public class Reader {
         getTxtFiles();
     }
 
+    /**
+     * Проверка на тип txt
+     *
+     * @param path путь файла
+     * @return является ли файл txt
+     */
     private boolean isTxtFile(String path) {
         return path.endsWith(".txt");
     }
 
+    /**
+     * @param path путь файла
+     */
     private void addFiles(Path path) {
         if (Files.isDirectory(path)) {
             directories.add(path);
@@ -26,6 +42,9 @@ public class Reader {
         }
     }
 
+    /**
+     *
+     */
     private void getTxtFiles() {
         this.root = Path.of(getDirectory());
         directories.add(root);
@@ -42,6 +61,11 @@ public class Reader {
         }
     }
 
+    /**
+     * ввод пути дериктории с консоли
+     *
+     * @return путь директории
+     */
     private String getDirectory() {
         while (true) {
             System.out.print("Путь: ");
@@ -53,6 +77,7 @@ public class Reader {
             }
         }
     }
+
 
     @Override
     public String toString() {
