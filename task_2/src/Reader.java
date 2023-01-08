@@ -7,9 +7,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class Reader {
+public class Reader implements Check {
     private final Scanner in = new Scanner(System.in);
-    private final ArrayList<Path> txtFiles = new ArrayList<>();
+    public Path root;
+    public final ArrayList<Path> txtFiles = new ArrayList<>();
     private final Queue<Path> directories = new LinkedList<>();
 
     public Reader() {
@@ -19,13 +20,13 @@ public class Reader {
     private void addFiles(Path path) {
         if (Files.isDirectory(path)) {
             directories.add(path);
-        } else if (Files.isRegularFile(path) && isTxt(path)) {
+        } else if (isTxtFile(path.toString())) {
             txtFiles.add(path);
         }
     }
 
     private void getTxtFiles() {
-        Path root = Path.of(getDirectory());
+        this.root = Path.of(getDirectory());
         directories.add(root);
 
         while (!directories.isEmpty()) {
@@ -52,22 +53,11 @@ public class Reader {
         }
     }
 
-    private boolean isTxt(Path path) {
-        String extension = "txt";
-        String name = path.getFileName().toString();
-        int i = name.lastIndexOf('.');
-        if (i > 0) {
-            name = name.substring(i + 1);
-            return name.equals(extension);
-        }
-        return false;
-    }
-
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
         for (var item : txtFiles) {
-            result.append(item.getFileName()).append("\n");
+            result.append(item.toString()).append("\n");
         }
         return result.toString();
     }
