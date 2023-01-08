@@ -2,19 +2,20 @@ import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
 
-public class Reader implements Check {
+public class Reader {
     private final Scanner in = new Scanner(System.in);
     public Path root;
-    public final ArrayList<Path> txtFiles = new ArrayList<>();
+    public final List<Path> txtFiles = new ArrayList<>();
     private final Queue<Path> directories = new LinkedList<>();
 
     public Reader() {
         getTxtFiles();
+    }
+
+    private boolean isTxtFile(String path) {
+        return path.endsWith(".txt");
     }
 
     private void addFiles(Path path) {
